@@ -1,0 +1,33 @@
+
+/* Class = "UISegmentedControl"; BZa-4g-SzI.segmentTitles[0] = "When I Arrive"; ObjectID = "BZa-4g-SzI"; */
+"BZa-4g-SzI.segmentTitles[0]" = "When I Arrive";
+
+/* Class = "UISegmentedControl"; BZa-4g-SzI.segmentTitles[1] = "When I Leave"; ObjectID = "BZa-4g-SzI"; */
+"BZa-4g-SzI.segmentTitles[1]" = "When I Leave";
+
+/* Class = "UIBarButtonItem"; title = "Add"; ObjectID = "OSG-OA-Td5"; */
+"OSG-OA-Td5.title" = "Add";
+
+/* Class = "UIButton"; normalTitle = "Pick a Location"; ObjectID = "QGt-oY-PVC"; */
+"QGt-oY-PVC.normalTitle" = "Pick a Location";
+
+/* Class = "UINavigationItem"; title = "Reminders"; ObjectID = "SzK-bp-WSq"; */
+"SzK-bp-WSq.title" = "Reminders";
+
+/* Class = "UILabel"; text = "When arriving at Main Avenue 15, 80100, New York, United States"; ObjectID = "Yce-I8-9hs"; */
+"Yce-I8-9hs.text" = "When arriving at Main Avenue 15, 80100, New York, United States";
+
+/* Class = "UITextView"; text = "Buy milk..."; ObjectID = "eMX-Nn-HBO"; */
+"eMX-Nn-HBO.text" = "Buy milk...";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "fRr-YF-KAk"; */
+"fRr-YF-KAk.text" = "Title";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "hZV-fp-tFz"; */
+"hZV-fp-tFz.text" = "Subtitle";
+
+/* Class = "UILabel"; text = "Buy milk"; ObjectID = "hwc-i1-OPd"; */
+"hwc-i1-OPd.text" = "Buy milk";
+
+/* Class = "UILabel"; text = "Current Location"; ObjectID = "khQ-NG-Q0x"; */
+"khQ-NG-Q0x.text" = "Current Location";

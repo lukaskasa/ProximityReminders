@@ -7,21 +7,59 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		80603D0622F8128000BC64E9 /* MKPlacemark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80603D0522F8128000BC64E9 /* MKPlacemark.swift */; };
+		80603D0E22F9AC5B00BC64E9 /* reminder.caf in Resources */ = {isa = PBXBuildFile; fileRef = 80603D0B22F9AB0E00BC64E9 /* reminder.caf */; };
 		807C7A7722F33FB9002E7054 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7A7622F33FB9002E7054 /* AppDelegate.swift */; };
-		807C7A7922F33FB9002E7054 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7A7822F33FB9002E7054 /* ViewController.swift */; };
+		807C7A7922F33FB9002E7054 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7A7822F33FB9002E7054 /* ListViewController.swift */; };
 		807C7A7C22F33FB9002E7054 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 807C7A7A22F33FB9002E7054 /* Main.storyboard */; };
 		807C7A7E22F33FB9002E7054 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 807C7A7D22F33FB9002E7054 /* Assets.xcassets */; };
 		807C7A8122F33FB9002E7054 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 807C7A7F22F33FB9002E7054 /* LaunchScreen.storyboard */; };
+		807C7A8D22F42653002E7054 /* ReminderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7A8C22F42653002E7054 /* ReminderCell.swift */; };
+		807C7A8F22F42686002E7054 /* ReminderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7A8E22F42686002E7054 /* ReminderDelegate.swift */; };
+		807C7A9122F426BD002E7054 /* ReminderDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7A9022F426BD002E7054 /* ReminderDatasource.swift */; };
+		807C7A9422F428A5002E7054 /* ProximityReminders.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 807C7A9222F428A5002E7054 /* ProximityReminders.xcdatamodeld */; };
+		807C7A9622F42943002E7054 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7A9522F42943002E7054 /* Reminder.swift */; };
+		807C7A9922F42D85002E7054 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7A9822F42D85002E7054 /* CoreDataManager.swift */; };
+		807C7A9B22F479BF002E7054 /* ReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7A9A22F479BF002E7054 /* ReminderViewController.swift */; };
+		807C7A9D22F47A88002E7054 /* LocationNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7A9C22F47A88002E7054 /* LocationNotificationManager.swift */; };
+		807C7AA122F47B6A002E7054 /* ReminderFetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7AA022F47B6A002E7054 /* ReminderFetchedResultsController.swift */; };
+		807C7AA422F5BCBB002E7054 /* LocationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7AA322F5BCBB002E7054 /* LocationError.swift */; };
+		807C7AA722F5BDBC002E7054 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7AA622F5BDBC002E7054 /* Coordinate.swift */; };
+		807C7AA922F5D1EB002E7054 /* LocationSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7AA822F5D1EB002E7054 /* LocationSearchController.swift */; };
+		807C7AAC22F7396D002E7054 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7AAB22F7396D002E7054 /* UIViewController.swift */; };
+		807C7AB022F749E9002E7054 /* CurrentLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7AAF22F749E9002E7054 /* CurrentLocationCell.swift */; };
+		807C7AB222F754D3002E7054 /* UISearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7AB122F754D3002E7054 /* UISearchBar.swift */; };
+		80FA29A422F9C9C80075E178 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80FA29A322F9C9C80075E178 /* MapKit.framework */; };
+		80FA29A522F9C9FF0075E178 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7A9E22F47A94002E7054 /* LocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		80603D0522F8128000BC64E9 /* MKPlacemark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKPlacemark.swift; sourceTree = "<group>"; };
+		80603D0B22F9AB0E00BC64E9 /* reminder.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = reminder.caf; sourceTree = "<group>"; };
 		807C7A7322F33FB9002E7054 /* ProximityReminders.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProximityReminders.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		807C7A7622F33FB9002E7054 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		807C7A7822F33FB9002E7054 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		807C7A7822F33FB9002E7054 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		807C7A7B22F33FB9002E7054 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		807C7A7D22F33FB9002E7054 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		807C7A8022F33FB9002E7054 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		807C7A8222F33FB9002E7054 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		807C7A8C22F42653002E7054 /* ReminderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCell.swift; sourceTree = "<group>"; };
+		807C7A8E22F42686002E7054 /* ReminderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderDelegate.swift; sourceTree = "<group>"; };
+		807C7A9022F426BD002E7054 /* ReminderDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderDatasource.swift; sourceTree = "<group>"; };
+		807C7A9322F428A5002E7054 /* ProximityReminders.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ProximityReminders.xcdatamodel; sourceTree = "<group>"; };
+		807C7A9522F42943002E7054 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
+		807C7A9822F42D85002E7054 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		807C7A9A22F479BF002E7054 /* ReminderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderViewController.swift; sourceTree = "<group>"; };
+		807C7A9C22F47A88002E7054 /* LocationNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationNotificationManager.swift; sourceTree = "<group>"; };
+		807C7A9E22F47A94002E7054 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		807C7AA022F47B6A002E7054 /* ReminderFetchedResultsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFetchedResultsController.swift; sourceTree = "<group>"; };
+		807C7AA322F5BCBB002E7054 /* LocationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationError.swift; sourceTree = "<group>"; };
+		807C7AA622F5BDBC002E7054 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
+		807C7AA822F5D1EB002E7054 /* LocationSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchController.swift; sourceTree = "<group>"; };
+		807C7AAB22F7396D002E7054 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		807C7AAF22F749E9002E7054 /* CurrentLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationCell.swift; sourceTree = "<group>"; };
+		807C7AB122F754D3002E7054 /* UISearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISearchBar.swift; sourceTree = "<group>"; };
+		80FA29A322F9C9C80075E178 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +67,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80FA29A422F9C9C80075E178 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		80603D0722F968D300BC64E9 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				80603D0B22F9AB0E00BC64E9 /* reminder.caf */,
+				807C7A7D22F33FB9002E7054 /* Assets.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
 		807C7A6A22F33FB9002E7054 = {
 			isa = PBXGroup;
 			children = (
 				807C7A7522F33FB9002E7054 /* ProximityReminders */,
 				807C7A7422F33FB9002E7054 /* Products */,
+				80FA29A222F9C9C80075E178 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +103,95 @@
 		807C7A7522F33FB9002E7054 /* ProximityReminders */ = {
 			isa = PBXGroup;
 			children = (
+				807C7A9722F42D79002E7054 /* Utilities */,
+				807C7A8B22F4260D002E7054 /* Datasource & Delegate */,
+				807C7A8922F425E6002E7054 /* Models */,
+				807C7A8A22F425ED002E7054 /* Views */,
+				807C7A8822F425DC002E7054 /* Controllers */,
+				80603D0722F968D300BC64E9 /* Assets */,
 				807C7A7622F33FB9002E7054 /* AppDelegate.swift */,
-				807C7A7822F33FB9002E7054 /* ViewController.swift */,
-				807C7A7A22F33FB9002E7054 /* Main.storyboard */,
-				807C7A7D22F33FB9002E7054 /* Assets.xcassets */,
-				807C7A7F22F33FB9002E7054 /* LaunchScreen.storyboard */,
 				807C7A8222F33FB9002E7054 /* Info.plist */,
 			);
 			path = ProximityReminders;
+			sourceTree = "<group>";
+		};
+		807C7A8822F425DC002E7054 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				807C7A7822F33FB9002E7054 /* ListViewController.swift */,
+				807C7A9A22F479BF002E7054 /* ReminderViewController.swift */,
+				807C7AA822F5D1EB002E7054 /* LocationSearchController.swift */,
+				807C7AA022F47B6A002E7054 /* ReminderFetchedResultsController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		807C7A8922F425E6002E7054 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				807C7A9522F42943002E7054 /* Reminder.swift */,
+				807C7A9222F428A5002E7054 /* ProximityReminders.xcdatamodeld */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		807C7A8A22F425ED002E7054 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				807C7A7F22F33FB9002E7054 /* LaunchScreen.storyboard */,
+				807C7A7A22F33FB9002E7054 /* Main.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		807C7A8B22F4260D002E7054 /* Datasource & Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				807C7A8E22F42686002E7054 /* ReminderDelegate.swift */,
+				807C7A9022F426BD002E7054 /* ReminderDatasource.swift */,
+				807C7A8C22F42653002E7054 /* ReminderCell.swift */,
+				807C7AAF22F749E9002E7054 /* CurrentLocationCell.swift */,
+			);
+			path = "Datasource & Delegate";
+			sourceTree = "<group>";
+		};
+		807C7A9722F42D79002E7054 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				807C7A9822F42D85002E7054 /* CoreDataManager.swift */,
+				807C7AAA22F7395F002E7054 /* Extensions */,
+				807C7AA522F5BDA4002E7054 /* Location */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		807C7AA522F5BDA4002E7054 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				807C7A9E22F47A94002E7054 /* LocationManager.swift */,
+				807C7A9C22F47A88002E7054 /* LocationNotificationManager.swift */,
+				807C7AA622F5BDBC002E7054 /* Coordinate.swift */,
+				807C7AA322F5BCBB002E7054 /* LocationError.swift */,
+			);
+			path = Location;
+			sourceTree = "<group>";
+		};
+		807C7AAA22F7395F002E7054 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				807C7AAB22F7396D002E7054 /* UIViewController.swift */,
+				807C7AB122F754D3002E7054 /* UISearchBar.swift */,
+				80603D0522F8128000BC64E9 /* MKPlacemark.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		80FA29A222F9C9C80075E178 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				80FA29A322F9C9C80075E178 /* MapKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -96,6 +226,11 @@
 				TargetAttributes = {
 					807C7A7222F33FB9002E7054 = {
 						CreatedOnToolsVersion = 10.3;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -124,6 +259,7 @@
 			files = (
 				807C7A8122F33FB9002E7054 /* LaunchScreen.storyboard in Resources */,
 				807C7A7E22F33FB9002E7054 /* Assets.xcassets in Resources */,
+				80603D0E22F9AC5B00BC64E9 /* reminder.caf in Resources */,
 				807C7A7C22F33FB9002E7054 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -135,7 +271,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				807C7A7922F33FB9002E7054 /* ViewController.swift in Sources */,
+				807C7AB022F749E9002E7054 /* CurrentLocationCell.swift in Sources */,
+				80603D0622F8128000BC64E9 /* MKPlacemark.swift in Sources */,
+				807C7A7922F33FB9002E7054 /* ListViewController.swift in Sources */,
+				807C7A9622F42943002E7054 /* Reminder.swift in Sources */,
+				807C7A9D22F47A88002E7054 /* LocationNotificationManager.swift in Sources */,
+				807C7AB222F754D3002E7054 /* UISearchBar.swift in Sources */,
+				807C7AA122F47B6A002E7054 /* ReminderFetchedResultsController.swift in Sources */,
+				807C7A9422F428A5002E7054 /* ProximityReminders.xcdatamodeld in Sources */,
+				807C7A8D22F42653002E7054 /* ReminderCell.swift in Sources */,
+				807C7AA722F5BDBC002E7054 /* Coordinate.swift in Sources */,
+				807C7A8F22F42686002E7054 /* ReminderDelegate.swift in Sources */,
+				807C7AA422F5BCBB002E7054 /* LocationError.swift in Sources */,
+				807C7A9B22F479BF002E7054 /* ReminderViewController.swift in Sources */,
+				807C7AA922F5D1EB002E7054 /* LocationSearchController.swift in Sources */,
+				807C7A9122F426BD002E7054 /* ReminderDatasource.swift in Sources */,
+				807C7A9922F42D85002E7054 /* CoreDataManager.swift in Sources */,
+				807C7AAC22F7396D002E7054 /* UIViewController.swift in Sources */,
+				80FA29A522F9C9FF0075E178 /* LocationManager.swift in Sources */,
 				807C7A7722F33FB9002E7054 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -336,6 +489,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		807C7A9222F428A5002E7054 /* ProximityReminders.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				807C7A9322F428A5002E7054 /* ProximityReminders.xcdatamodel */,
+			);
+			currentVersion = 807C7A9322F428A5002E7054 /* ProximityReminders.xcdatamodel */;
+			path = ProximityReminders.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 807C7A6B22F33FB9002E7054 /* Project object */;
 }
