@@ -10,13 +10,9 @@ import UIKit
 import CoreData
 import MapKit
 
-enum Perimeter {
-    case whenIArrive, whenILeave
-}
-
 class ReminderViewController: UIViewController {
     
-    // Outlets
+    // MARK: -  Outlets
     @IBOutlet weak var reminderTextView: UITextView!
     @IBOutlet weak var arriveLeaveSegmentControl: UISegmentedControl!
     @IBOutlet weak var mapView: UIView!
@@ -24,6 +20,7 @@ class ReminderViewController: UIViewController {
     @IBOutlet weak var setLocationButton: UIButton!
     @IBOutlet weak var locationActivityIndicator: UIActivityIndicatorView!
     
+    // MARK: - Properties
     let map = MKMapView()
     var resultSearchController: UISearchController?
     var locationSearchController: LocationSearchController?
@@ -33,12 +30,17 @@ class ReminderViewController: UIViewController {
     var perimeter: Perimeter = .whenIArrive
     var regionBoundry: MKCircle?
     
+    // Enum to represent the options when a notification should be trigerred
+    enum Perimeter {
+        case whenIArrive, whenILeave
+    }
+    
     lazy var locationManager: LocationManager = {
         return LocationManager(delegate: self, viewController: self)
     }()
     
-    lazy var notificationManager: LocationNotificationManager = {
-        return LocationNotificationManager(viewController: nil)
+    lazy var notificationManager: NotificationManager = {
+        return NotificationManager(viewController: nil)
     }()
     
     // MARK: - View Life Cycle
@@ -47,6 +49,7 @@ class ReminderViewController: UIViewController {
         super.viewDidLoad()
         // Setup
         map.delegate = self
+        reminderTextView.delegate = self
         locationActivityIndicator.startAnimating()
         locationSearchController = (storyboard!.instantiateViewController(withIdentifier: String(describing: LocationSearchController.self)) as! LocationSearchController)
         locationSearchController?.handleMapSearchDelegate = self
@@ -55,13 +58,9 @@ class ReminderViewController: UIViewController {
         configureReminder()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        view.setNeedsLayout()
-    }
-    
     // MARK: - Actions
     
+    /// Segmentcontrol action to select when the region notification should be triggered
     @IBAction func switchPerimeter(_ sender: UISegmentedControl) {
         
         switch sender.selectedSegmentIndex {
@@ -77,18 +76,20 @@ class ReminderViewController: UIViewController {
         
     }
     
+    /// Setup searchbar when user wants to search for a location
     @IBAction func searchLocation(_ sender: Any) {
         setupSearchBar()
     }
     
-    
     // MARK: - Helper Methods
     
+    /// Configure the save button for the navigation bar
     func configureSaveButton() {
         let saveButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveReminder))
         navigationItem.rightBarButtonItem = saveButton
     }
     
+    /// Save a new or existing reminder to the database
     @objc func saveReminder() {
 
         if reminder == nil {
@@ -119,12 +120,12 @@ class ReminderViewController: UIViewController {
         }
         
         managedObjectContext.saveChanges()
-    
         navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Helper
     
+    /// Get the address using the geographical coordinates and save it for the reminder
     func getAddress(reminder: Reminder?) {
         guard let reminder = reminder else { return }
         if let latitude = reminder.latitude as! Double?, let longitude = reminder.longitude as! Double? {
@@ -146,7 +147,9 @@ class ReminderViewController: UIViewController {
         }
     }
     
+    /// Configure an existing reminder
     func configureReminder() {
+        
         guard let reminder = reminder else {
             getLocation()
             self.title = "New Reminder"
@@ -186,30 +189,25 @@ class ReminderViewController: UIViewController {
         
     }
     
+    /// Configures the map view using the provided location
     func configureMap(with location: CLLocation) {
-        
         map.translatesAutoresizingMaskIntoConstraints = false
         mapView.addSubview(map)
         let span = MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002)
         let region = MKCoordinateRegion(center: location.coordinate, span: span)
-        
         addMapAnnonation(for: selectedLocation)
         addMapOverlay(for: selectedLocation)
-        
         map.setRegion(region, animated: true)
         map.showsUserLocation = true
-        
-        //map.isZoomEnabled = false
-        //map.isScrollEnabled = false
         map.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 0).isActive = true
         map.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: 0).isActive = true
         map.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 0).isActive = true
         map.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 0).isActive = true
     }
     
+    /// Configures the searchbar to be able to search for locations
     func setupSearchBar() {
         definesPresentationContext = true
-        
         locationSearchController?.mapView = map
         resultSearchController = UISearchController(searchResultsController: locationSearchController)
         
@@ -229,6 +227,7 @@ class ReminderViewController: UIViewController {
 
     }
     
+    /// Adds a 'Done' button to the keyboard tool bar to be able to dismiss the keyboard
     func addDoneButtonOnKeyboard() {
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
         doneToolbar.barStyle = UIBarStyle.default
@@ -249,20 +248,35 @@ class ReminderViewController: UIViewController {
         
     }
     
+    /// Resigns the text view as first responder
     @objc func editDone() {
         reminderTextView.resignFirstResponder()
     }
     
 }
 
+/// UITextViewDelegate
+/// Apple documentation: https://developer.apple.com/documentation/uikit/uitextviewdelegate
+extension ReminderViewController: UITextViewDelegate {
+    
+    /// Tells the delegate that editing of the specified text view has begun.
+    /// Apple documentation: https://developer.apple.com/documentation/uikit/uitextviewdelegate/1618610-textviewdidbeginediting
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        textView.text = ""
+    }
+    
+}
+
+/// Protocol to handle the map search result returned from the LocationSearchController
 protocol HandleMapSearch: class {
     func dropInZoom(placemark: MKPlacemark)
 }
 
+// MARK: - HandleMapSearch
 extension ReminderViewController: HandleMapSearch {
     
     // MARK: - Delegate Methods
-    
+    /// Navigates to the location on the map once a location is selected by the user
     func dropInZoom(placemark: MKPlacemark) {
         selectedLocation = placemark
         
@@ -277,6 +291,7 @@ extension ReminderViewController: HandleMapSearch {
     
     // MARK: - Helper
     
+    /// Adds annotation onto the map for the proveded placemark
     func addMapAnnonation(for place: MKPlacemark?) {
         map.removeAnnotations(map.annotations)
         guard let place = place else { return }
@@ -292,6 +307,7 @@ extension ReminderViewController: HandleMapSearch {
         map.addAnnotation(annotation)
     }
     
+    /// Adds overlay onto the map for the proveded placemark
     func addMapOverlay(for place: MKPlacemark?) {
         map.removeOverlays(map.overlays)
         guard let place = place else { return }
@@ -301,12 +317,19 @@ extension ReminderViewController: HandleMapSearch {
     
 }
 
+// MARK: - MKMapViewDelegate
+/// Apple documentation: https://developer.apple.com/documentation/mapkit/mkmapviewdelegate
 extension ReminderViewController: MKMapViewDelegate {
     
+    /// Asks the delegate for a renderer object to use when drawing the specified overlay.
+    /// Apple documentation: https://developer.apple.com/documentation/mapkit/mkmapviewdelegate/1452203-mapview
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         
+        /// Define the brand color
         let brandColor = UIColor(red: 126/255, green: 158/255, blue: 255/255, alpha: 0.3)
         
+        /// If the overlay is a MKCircle and dependent which perimeter is selected
+        /// the correct Renderer is used to draw the overlay on the map
         if overlay.isKind(of: MKCircle.self){
             regionBoundry = overlay as? MKCircle
             if perimeter == .whenIArrive {
@@ -322,28 +345,24 @@ extension ReminderViewController: MKMapViewDelegate {
             
         }
         
-        if overlay.isKind(of: MKPolygon.self) {
-            let polygonRenderer = MKPolygonRenderer(overlay: overlay)
-            polygonRenderer.fillColor = brandColor
-            return polygonRenderer
-        }
-        
         return MKOverlayRenderer(overlay: overlay)
-    
     }
     
 }
-
+// MARK: - InvertCircleRenderer: Renderer to color the outside of the circle
 class InvertCircleRenderer: MKOverlayRenderer {
     
+    /// Properties
     var circle: MKCircle
     var fillColor = UIColor(red: 126/255, green: 158/255, blue: 255/255, alpha: 0.3)
     
+    /// Rendered intialization
     init(circle: MKCircle) {
         self.circle = circle
         super.init(overlay: circle)
     }
     
+    /// Override draw method to draw a circle where everything outside is colored
     override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
         
         let path = UIBezierPath(rect: rect(for: MKMapRect.world))
@@ -364,28 +383,33 @@ class InvertCircleRenderer: MKOverlayRenderer {
 
 }
 
+// MARK: - LocationManagerDelegate
 extension ReminderViewController: LocationManagerDelegate {
     
+    /// Called when the coordinated to the user location are received
     func obtainedCoordinates(_ coordinate: Coordinate) {
         locationActivityIndicator.stopAnimating()
         setLocationButton.isEnabled = true
         configureMap(with: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))
     }
     
+    /// Called when an error occurs during the location request
     func failedWithError(_ error: LocationError) {
-        print("Error")
         showAlert(with: "Error", and: error.localizedDescription)
     }
     
     // MARK: - Helper
     
+    /// Request the current location
     func getLocation() {
-        
         if !locationManager.isAuthorized {
             do {
                 try locationManager.requestLocationAuthorization()
             } catch LocationError.disallowedByUser {
                 showSettingsAlert(with: "No Access", and: "Please allow location services in the settings to proceed.")
+            }
+            catch LocationError.locationServicesUnavailable {
+                showSettingsAlert(with: "Location services unavailable", and: "Please enable lcoation services to use region monitoring.")
             } catch {
                 fatalError()
             }

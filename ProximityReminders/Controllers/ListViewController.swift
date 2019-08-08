@@ -29,8 +29,8 @@ class ListViewController: UITableViewController {
         return LocationManager(delegate: nil, viewController: self)
     }()
     
-    lazy var notificationManager: LocationNotificationManager = {
-        return LocationNotificationManager(viewController: self)
+    lazy var notificationManager: NotificationManager = {
+        return NotificationManager(viewController: self)
     }()
     
     // MARK: View Cycle Methods
@@ -47,11 +47,10 @@ class ListViewController: UITableViewController {
     }
     
     // MARK: - Navigation
-    
+    /// Prepare for segue to be performed by setting all the required propeeties
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "showReminder" {
-            
             guard let reminderViewController = segue.destination as? ReminderViewController,
                 let indexPath = tableView.indexPathForSelectedRow else { return }
             
@@ -59,26 +58,25 @@ class ListViewController: UITableViewController {
             // Configure reminder
             let reminder = datasource.object(at: indexPath)
             reminderViewController.reminder = reminder
-            
         } else if segue.identifier == "newReminder" {
-            
             let reminderViewController = segue.destination as! ReminderViewController
             reminderViewController.managedObjectContext = self.managedObjectContext
-            
         } else {
             return
         }
         
-        
     }
     
     // MARK: - Helper Methods
-    
+
+    /// Method to reset the predicate
     func resetPredicate() {
         datasource.fetchedResultsController.fetchRequest.predicate = nil
         datasource.fetchedResultsController.tryFetch()
     }
     
+
+    /// Method to set the badge count on launch
     func setBadgeCount() {
         let predicate = NSPredicate(format: "isCompleted == %@", 0)
         datasource.fetchedResultsController.fetchRequest.predicate = predicate
@@ -87,21 +85,23 @@ class ListViewController: UITableViewController {
         resetPredicate()
     }
 
+     /// Set the predicate and perform a fetch using the Reminder dateIdentifier property
+    func setPredicateAndFetch(with identifier: String) {
+        let predicate = NSPredicate(format: "dateIdentifier == %@", identifier)
+        datasource.fetchedResultsController.fetchRequest.predicate = predicate
+        datasource.fetchedResultsController.tryFetch()
+    }
 }
 
 /// LocationNotificationManagerDelegate implementation
 extension ListViewController: LocationNotificationManagerDelegate {
 
+    /// Notification is fired once the region entry or exit is triggred
     func fireNotification(for identifier: String, and region: CLRegion) {
-
-        let predicate = NSPredicate(format: "dateIdentifier == %@", identifier)
-        datasource.fetchedResultsController.fetchRequest.predicate = predicate
-        datasource.fetchedResultsController.tryFetch()
+        setPredicateAndFetch(with: identifier)
         let reminder = datasource.fetchedResultsController.fetchedObjects?.first
-
         notificationManager.scheduleNotification(with: reminder?.reminderDescription ?? "No title", identfier: identifier)
         resetPredicate()
-
     }
 
 }
@@ -109,11 +109,9 @@ extension ListViewController: LocationNotificationManagerDelegate {
 /// NotificationActionHandlerDelegate implementation
 extension ListViewController: NotificationActionHandlerDelegate {
     
+     /// Marks the reminders as completed when the action is triggered by the user
     func markAsCompleted(for identifier: String) {
-        
-        let predicate = NSPredicate(format: "dateIdentifier == %@", identifier)
-        datasource.fetchedResultsController.fetchRequest.predicate = predicate
-        datasource.fetchedResultsController.tryFetch()
+        setPredicateAndFetch(with: identifier)
         resetPredicate()
         let reminder = datasource.fetchedResultsController.fetchedObjects?.first
         reminder?.isCompleted = true

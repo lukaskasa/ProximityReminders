@@ -10,25 +10,29 @@ import UIKit
 import CoreLocation
 import MapKit
 
+/// LocationManagerDelegate: To handle return user location and possible errors
 protocol LocationManagerDelegate: class {
     func obtainedCoordinates(_ coordinate: Coordinate)
     func failedWithError(_ error: LocationError)
 }
 
+/// LocationNotificationManagerDelegate: To handle the notification
 protocol LocationNotificationManagerDelegate: class {
     func fireNotification(for identifier: String, and region: CLRegion)
 }
 
-
+/// Location Manager to handle
 class LocationManager: NSObject, CLLocationManagerDelegate {
     
     /// Properties
     private let locationManager = CLLocationManager()
     private let geoDecoder = CLGeocoder()
     var viewController: UIViewController?
+    /// Delegates
     weak var delegate: LocationManagerDelegate?
     weak var locationNotificationManagerDelegate: LocationNotificationManagerDelegate?
     
+    /// Computed property to get location services authorization
     var isAuthorized: Bool {
         switch CLLocationManager.authorizationStatus() {
         case .authorizedAlways:
@@ -38,6 +42,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    /// Computed property to check if monitoring and background refresh is available
     var hasFunctionality: Bool {
         if CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) && UIApplication.shared.backgroundRefreshStatus != .restricted {
             return true
@@ -46,6 +51,15 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         return false
     }
     
+    /**
+     Initializes manager to handle Location based functionality
+     
+     - Parameters:
+        - delegate: The delegate to handle location
+        - viewController: The view controller used to handle alerts and authorization requests
+     
+     - Returns: A manager for location services
+     */
     init(delegate: LocationManagerDelegate?, viewController: UIViewController?) {
         self.delegate = delegate
         self.viewController = viewController
@@ -53,20 +67,44 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         locationManager.delegate = self
     }
     
+    /**
+     Requests the Location Authorization
+     
+     - Throws: 'LocationError.disallowedByUser' - if location services are dissallowed by the user
+     'LocationError.locationServicesUnavailable' if location servies are not available
+     
+     - Returns: Void
+     */
     func requestLocationAuthorization() throws {
         
         let authorizationStatus = CLLocationManager.authorizationStatus()
         
-        if authorizationStatus == .restricted || authorizationStatus == .denied {
-            throw LocationError.disallowedByUser
-        } else if authorizationStatus == .notDetermined {
-            locationManager.requestAlwaysAuthorization()
-        } else {
-            return
-        }
+        let locationServicesEnabled = CLLocationManager.locationServicesEnabled()
         
+        if locationServicesEnabled {
+            if authorizationStatus == .restricted || authorizationStatus == .denied {
+                throw LocationError.disallowedByUser
+            } else if authorizationStatus == .notDetermined {
+                locationManager.requestAlwaysAuthorization()
+            } else {
+                return
+            }
+        } else {
+            throw LocationError.locationServicesUnavailable
+        }
+
     }
     
+    /**
+     Starts the monitoring of a region
+     
+     - Parameters:
+        - regionBoundry: MKCircle: The region boundry in form of a circle to be used
+        - identifier: String: The identifier for the region monitoring instance
+        - entry: Bool: Whether the notification is sent on entry or exit
+     
+     - Returns: Void
+     */
     func monitorRegionAtLocation(regionBoundry: MKCircle, identifier: String, entry: Bool) {
         
         var boundry = regionBoundry.radius
@@ -81,13 +119,23 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
             
             region.notifyOnEntry = entry
             region.notifyOnExit = !entry
-            // Limit is 20 regions
             
+            // 20 regions is the limit to monitor simultaneously
             locationManager.startMonitoring(for: region)
         }
         
     }
     
+    /**
+     Stops the monitoring of a region
+     
+     - Parameters:
+        - latitude: Double: The latitude of the geographical coordinate.
+        - longitude: Double: The longitude of the geographical coordinate.
+        - identifier: String: The identifier for the region monitoring instance
+     
+     - Returns: Void
+     */
     func stopMonitoring(latitude: Double, longitude: Double, identifier: String) {
         let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let circle = MKCircle(center: coordinate, radius: 50.0)
@@ -95,11 +143,21 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         locationManager.stopMonitoring(for: region)
     }
     
+    
+    /**
+     Gets the address using latitude and longitude
+     
+     - Parameters:
+        - latitude: Double: The latitude of the geographical coordinate.
+        - longitude: Double: The longitude of the geographical coordinate.
+     
+     - Returns: Void
+     
+     */
     func getAddress(latitude: Double, longitude: Double, completion: @escaping (CLPlacemark?, Error?) -> Void) {
         let location = CLLocation(latitude: latitude, longitude: longitude)
         
         geoDecoder.reverseGeocodeLocation(location) { placemarks, error in
-            
             
             var placeMark: CLPlacemark!
             placeMark = placemarks?[0]
@@ -113,6 +171,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    /// Requests the current user location
     func requestLocation() {
         locationManager.requestLocation()
     }
@@ -159,30 +218,26 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         delegate?.obtainedCoordinates(coordinate)
     }
     
-    // Region based methods
+    /// Region based methods
 
-    
+    /// Tells the delegate that the user entered the specified region.
+    /// Apple documentation: https://developer.apple.com/documentation/corelocation/cllocationmanagerdelegate/1423560-locationmanager
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         
         if let region = region as? CLCircularRegion {
-            
             let identifier = region.identifier
-            
             locationNotificationManagerDelegate?.fireNotification(for: identifier, and: region)
-            
         }
         
     }
     
+    /// Tells the delegate that the user left the specified region.
+    /// Apple documentation: https://developer.apple.com/documentation/corelocation/cllocationmanagerdelegate/1423630-locationmanager
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
         
-        
         if let region = region as? CLCircularRegion {
-            
             let identifier = region.identifier
-            
             locationNotificationManagerDelegate?.fireNotification(for: identifier, and: region)
-            
         }
         
     }

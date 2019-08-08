@@ -14,6 +14,7 @@ class ReminderFetchedResultsController: NSFetchedResultsController<Reminder> {
     /// Properies
     private let tableView: UITableView
     
+    /// Initialization of the ReminderFetchedResultsController
     init(fetchedRequest: NSFetchRequest<Reminder>, managedObjectContext: NSManagedObjectContext, sectionKeyPath: String?, tableView: UITableView) {
         self.tableView = tableView
         super.init(fetchRequest: fetchedRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: sectionKeyPath, cacheName: nil)

@@ -7,7 +7,8 @@
 //
 
 import CoreData
-/// CoreDate Object represting each reminder
+
+/// CoreData Object represting each reminder
 public class Reminder: NSManagedObject {
     
     @NSManaged public var createDate: NSDate
@@ -21,6 +22,7 @@ public class Reminder: NSManagedObject {
     
 }
 
+/// Reminder extension with the fetchRequest implementation
 extension Reminder {
     
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Reminder> {

@@ -26,13 +26,17 @@ class ReminderCell: UITableViewCell {
     var reminder: Reminder!
     var tableView: UITableView!
     
+    // The reuse identifier for the ReminderCell
     static let reuseIdentifier = "ReminderCell"
     
     override func awakeFromNib() {
+        selectionStyle = .none
         super.awakeFromNib()
     }
     
     // MARK: - Actions
+    
+    /// Action to handle the completion of reminders
     @IBAction func complete(_ sender: Any) {
         guard let reminder = reminder else { return }
         reminder.isCompleted = !reminder.isCompleted

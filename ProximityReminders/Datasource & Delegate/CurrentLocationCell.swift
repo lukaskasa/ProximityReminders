@@ -8,8 +8,10 @@
 
 import UIKit
 
+/// Cell for location search results
 class CurrentLocationCell: UITableViewCell {
     
+    // The reuse identifier for the CurrentLocationCell
     static let reuseIdentifier = "CurrentLocationCell"
     
     override func awakeFromNib() {

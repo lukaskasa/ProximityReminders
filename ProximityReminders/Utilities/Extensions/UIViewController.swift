@@ -14,8 +14,8 @@ extension UIViewController {
      Sets up and shows an Alert
      
      - Parameters:
-     - title: The title of the alert
-     - message: The message of the alert
+        - title: The title of the alert
+        - message: The message of the alert
      
      - Returns: Void
      */
@@ -30,8 +30,8 @@ extension UIViewController {
      Sets up and shows an Alert with app settings access
      
      - Parameters:
-     - title: The title of the alert
-     - message: The message of the alert
+        - title: The title of the alert
+        - message: The message of the alert
      
      - Returns: Void
      */

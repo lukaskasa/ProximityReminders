@@ -21,7 +21,7 @@
 		807C7A9622F42943002E7054 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7A9522F42943002E7054 /* Reminder.swift */; };
 		807C7A9922F42D85002E7054 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7A9822F42D85002E7054 /* CoreDataManager.swift */; };
 		807C7A9B22F479BF002E7054 /* ReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7A9A22F479BF002E7054 /* ReminderViewController.swift */; };
-		807C7A9D22F47A88002E7054 /* LocationNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7A9C22F47A88002E7054 /* LocationNotificationManager.swift */; };
+		807C7A9D22F47A88002E7054 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7A9C22F47A88002E7054 /* NotificationManager.swift */; };
 		807C7AA122F47B6A002E7054 /* ReminderFetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7AA022F47B6A002E7054 /* ReminderFetchedResultsController.swift */; };
 		807C7AA422F5BCBB002E7054 /* LocationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7AA322F5BCBB002E7054 /* LocationError.swift */; };
 		807C7AA722F5BDBC002E7054 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C7AA622F5BDBC002E7054 /* Coordinate.swift */; };
@@ -50,7 +50,7 @@
 		807C7A9522F42943002E7054 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		807C7A9822F42D85002E7054 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		807C7A9A22F479BF002E7054 /* ReminderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderViewController.swift; sourceTree = "<group>"; };
-		807C7A9C22F47A88002E7054 /* LocationNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationNotificationManager.swift; sourceTree = "<group>"; };
+		807C7A9C22F47A88002E7054 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		807C7A9E22F47A94002E7054 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		807C7AA022F47B6A002E7054 /* ReminderFetchedResultsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFetchedResultsController.swift; sourceTree = "<group>"; };
 		807C7AA322F5BCBB002E7054 /* LocationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationError.swift; sourceTree = "<group>"; };
@@ -159,8 +159,8 @@
 			isa = PBXGroup;
 			children = (
 				807C7A9822F42D85002E7054 /* CoreDataManager.swift */,
-				807C7AAA22F7395F002E7054 /* Extensions */,
 				807C7AA522F5BDA4002E7054 /* Location */,
+				807C7AAA22F7395F002E7054 /* Extensions */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -169,7 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				807C7A9E22F47A94002E7054 /* LocationManager.swift */,
-				807C7A9C22F47A88002E7054 /* LocationNotificationManager.swift */,
+				807C7A9C22F47A88002E7054 /* NotificationManager.swift */,
 				807C7AA622F5BDBC002E7054 /* Coordinate.swift */,
 				807C7AA322F5BCBB002E7054 /* LocationError.swift */,
 			);
@@ -275,7 +275,7 @@
 				80603D0622F8128000BC64E9 /* MKPlacemark.swift in Sources */,
 				807C7A7922F33FB9002E7054 /* ListViewController.swift in Sources */,
 				807C7A9622F42943002E7054 /* Reminder.swift in Sources */,
-				807C7A9D22F47A88002E7054 /* LocationNotificationManager.swift in Sources */,
+				807C7A9D22F47A88002E7054 /* NotificationManager.swift in Sources */,
 				807C7AB222F754D3002E7054 /* UISearchBar.swift in Sources */,
 				807C7AA122F47B6A002E7054 /* ReminderFetchedResultsController.swift in Sources */,
 				807C7A9422F428A5002E7054 /* ProximityReminders.xcdatamodeld in Sources */,

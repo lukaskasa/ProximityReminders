@@ -8,8 +8,13 @@
 
 import MapKit
 
-public extension MKPlacemark {
+extension MKPlacemark {
     
+    /**
+     Function to parse the address from a placemark
+     
+     - Returns: String: Parsed address
+     */
     func parseAddress() -> String {
         var address = ""
         var street = "", houseNumber = "", zipCode = "", city = "", country = ""

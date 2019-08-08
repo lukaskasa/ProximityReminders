@@ -8,11 +8,19 @@
 
 import UIKit
 
-public extension UISearchBar {
+extension UISearchBar {
     
+    /**
+     Gets the textfield from the UISearchBar to set the text color
+     
+     - Parameters:
+        - color: UIColor: The text color
+     
+     - Returns: Void
+     */
     func setTextColor(color: UIColor) {
-        let svs = subviews.flatMap { $0.subviews }
-        guard let textField = (svs.filter { $0 is UITextField }).first as? UITextField else { return }
+        let views = subviews.flatMap { $0.subviews }
+        guard let textField = (views.filter { $0 is UITextField }).first as? UITextField else { return }
         textField.textColor = color
     }
     

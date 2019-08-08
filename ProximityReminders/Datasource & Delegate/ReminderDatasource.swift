@@ -8,22 +8,34 @@
 
 import UIKit
 import CoreData
-import CoreLocation
-import MapKit
 
+/// UITableViewDataSource Object
 class ReminderDatasource: NSObject, UITableViewDataSource {
     
+    /// Properties
     private let tableView: UITableView
     private let managedObjectContext: NSManagedObjectContext
     private let viewController: UIViewController
     private let numberOfSections: Int = 2
+    
+    /// Constants - Strings
+    struct Constants {
+        static let completedSectionKeyPath = "isCompleted"
+        static let emptyTableViewText = "All done! Enjoy your day!"
+        static let sectionNotCompleted = "Not Completed"
+        static let sectionCompleted = "Completed"
+        static let arrivingText = "When arriving at: "
+        static let leavingText = "When leaving: "
+        static let locationNotSet = "Location not set"
+        static let checkmarkImageName = "checkmark"
+    }
     
     lazy var locationManager: LocationManager = {
         return LocationManager(delegate: nil, viewController: nil)
     }()
     
     lazy var fetchedResultsController: ReminderFetchedResultsController = {
-        let controller = ReminderFetchedResultsController(fetchedRequest: Reminder.fetchRequest(), managedObjectContext: managedObjectContext, sectionKeyPath: "isCompleted", tableView: tableView)
+        let controller = ReminderFetchedResultsController(fetchedRequest: Reminder.fetchRequest(), managedObjectContext: managedObjectContext, sectionKeyPath: Constants.completedSectionKeyPath, tableView: tableView)
         return controller
     }()
     
@@ -39,10 +51,11 @@ class ReminderDatasource: NSObject, UITableViewDataSource {
     }
     
     // MARK: - Datasource
-    
+    /// The number of sections in the table view.
+    /// Apple documentation: https://developer.apple.com/documentation/uikit/uitableview/1614924-numberofsections
     func numberOfSections(in tableView: UITableView) -> Int {
         /// In case the are no sections a label is configured here
-        let labelText = "All done! Enjoy your day!"
+        let labelText = Constants.emptyTableViewText
         if fetchedResultsController.sections?.count == 0 {
             let noMatchesLabel = UILabel(frame: CGRect(x: 0, y: 0, width: viewController.view.bounds.size.width, height: viewController.view.bounds.size.height))
             noMatchesLabel.tag = 100
@@ -72,9 +85,9 @@ class ReminderDatasource: NSObject, UITableViewDataSource {
         }
         
         if sectionName == "0" {
-            sectionName = "Not Completed"
+            sectionName = Constants.sectionNotCompleted
         } else if sectionName == "1" {
-            sectionName = "Completed"
+            sectionName = Constants.sectionCompleted
         }
 
         return sectionName
@@ -90,14 +103,18 @@ class ReminderDatasource: NSObject, UITableViewDataSource {
         return section.numberOfObjects
     }
    
+    /// Asks the data source for a cell to insert in a particular location of the table view.
+    /// Apple documentation: https://developer.apple.com/documentation/uikit/uitableviewdatasource/1614861-tableview
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ReminderCell.reuseIdentifier, for: indexPath) as! ReminderCell
         
         let reminder = fetchedResultsController.object(at: indexPath)
         
-        cell.checkmarkImageView.image = reminder.isCompleted ? UIImage(imageLiteralResourceName: "checkmark") : nil
+        cell.checkmarkImageView.image = reminder.isCompleted ? UIImage(imageLiteralResourceName: Constants.checkmarkImageName) : nil
         cell.descriptionLabel.text = reminder.reminderDescription
-        cell.locationLabel.text = reminder.entrance ? "When arriving at: \(reminder.address ?? "")" : "When leaving: \(reminder.address ?? "")"
+        let arrivingText = reminder.address != nil ? Constants.arrivingText : Constants.locationNotSet
+        let leavingText = reminder.address != nil ? Constants.leavingText : Constants.locationNotSet
+        cell.locationLabel.text = reminder.entrance ? "\(arrivingText)\(reminder.address ?? "")" : "\(leavingText)\(reminder.address ?? "")"
         cell.managedObjectContext = managedObjectContext
         cell.tableView = self.tableView
         cell.reminder = reminder
@@ -105,6 +122,8 @@ class ReminderDatasource: NSObject, UITableViewDataSource {
         return cell
     }
     
+    /// Asks the data source to commit the insertion or deletion of a specified row in the receiver.
+    /// https://developer.apple.com/documentation/uikit/uitableviewdatasource/1614871-tableview
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let reminder = fetchedResultsController.object(at: indexPath)
         reminder.isCompleted = true

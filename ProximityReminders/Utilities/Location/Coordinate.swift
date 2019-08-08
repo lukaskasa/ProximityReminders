@@ -8,11 +8,13 @@
 
 import CoreLocation
 
+/// Cordinate to represent a geographical location
 struct Coordinate {
     let latitude: Double
     let longitude: Double
 }
 
+/// Extension with a custom initializer for the Coordinate struct
 extension Coordinate {
     
     init(with location: CLLocation) {

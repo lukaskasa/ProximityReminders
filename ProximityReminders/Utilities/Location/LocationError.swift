@@ -8,9 +8,11 @@
 
 import Foundation
 
+/// LocationError enum for location based errors
 enum LocationError: Error {
     case unknownError
     case disallowedByUser
     case unableToFindLocation
     case backgroundRefreshIsDisabled
+    case locationServicesUnavailable
 }
