@@ -139,7 +139,7 @@ class ReminderViewController: UIViewController {
                 }
                 
                 if error != nil {
-                    self.showAlert(with: "Error", and: error!.localizedDescription)
+                    self.showSettingsAlert(with: "Error", and: "Please check your settings! Wi-Fi and Location services are required!")
                 }
                 
             }
@@ -176,15 +176,15 @@ class ReminderViewController: UIViewController {
             locationManager.getAddress(latitude: latitude, longitude: longitude) { place, error in
                 
                 if let place = place {
-                    self.selectedLocation = MKPlacemark(placemark: place)
-                    self.configureMap(with: location)
+                    if error == nil {
+                        self.selectedLocation = MKPlacemark(placemark: place)
+                        self.configureMap(with: location)
+                    } else {
+                        self.showAlert(with: "Error", and: error!.localizedDescription)
+                    }
                 }
-                
-                if error != nil {
-                    self.showAlert(with: "Error", and: error!.localizedDescription)
-                }
+
             }
-            
         }
         
     }
@@ -218,7 +218,6 @@ class ReminderViewController: UIViewController {
             searchController.searchBar.setTextColor(color: .black)
             searchController.searchBar.becomeFirstResponder()
             searchController.searchBar.text = " "
-            //searchController.searchBar.sizeToFit()
             searchController.hidesNavigationBarDuringPresentation = true
             searchController.dimsBackgroundDuringPresentation = false
             searchController.searchResultsUpdater = locationSearchController
@@ -395,13 +394,20 @@ extension ReminderViewController: LocationManagerDelegate {
     
     /// Called when an error occurs during the location request
     func failedWithError(_ error: LocationError) {
-        showAlert(with: "Error", and: error.localizedDescription)
+        
+        if error == .disallowedByUser {
+            showAlert(with: "Error", and: "Dissallowed by user!")
+        } else if error == .locationServicesUnavailable {
+            showAlert(with: "Error", and: "Location services unavailable!")
+        } else {
+            showAlert(with: "Error", and: "Please check your settings! Wi-Fi and Location services are required!")
+        }
+        
     }
     
     // MARK: - Helper
     
-    /// Request the current location
-    func getLocation() {
+    func locationServicesAvailable() -> Bool {
         if !locationManager.isAuthorized {
             do {
                 try locationManager.requestLocationAuthorization()
@@ -409,14 +415,22 @@ extension ReminderViewController: LocationManagerDelegate {
                 showSettingsAlert(with: "No Access", and: "Please allow location services in the settings to proceed.")
             }
             catch LocationError.locationServicesUnavailable {
-                showSettingsAlert(with: "Location services unavailable", and: "Please enable lcoation services to use region monitoring.")
+                showSettingsAlert(with: "Location services unavailable", and: "Please enable location services to use region monitoring.")
             } catch {
                 fatalError()
             }
         } else {
-            locationManager.requestLocation()
+            return true
         }
         
+        return false
+    }
+    
+    /// Request the current location
+    func getLocation() {
+        if locationServicesAvailable() {
+            locationManager.requestLocation()
+        }
     }
 
 }

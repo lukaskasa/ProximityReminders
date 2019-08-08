@@ -159,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				807C7A9822F42D85002E7054 /* CoreDataManager.swift */,
+				807C7A9C22F47A88002E7054 /* NotificationManager.swift */,
 				807C7AA522F5BDA4002E7054 /* Location */,
 				807C7AAA22F7395F002E7054 /* Extensions */,
 			);
@@ -169,7 +170,6 @@
 			isa = PBXGroup;
 			children = (
 				807C7A9E22F47A94002E7054 /* LocationManager.swift */,
-				807C7A9C22F47A88002E7054 /* NotificationManager.swift */,
 				807C7AA622F5BDBC002E7054 /* Coordinate.swift */,
 				807C7AA322F5BCBB002E7054 /* LocationError.swift */,
 			);

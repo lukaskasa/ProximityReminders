@@ -164,7 +164,6 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
             completion(placeMark, nil)
             
             if error != nil {
-                self.viewController?.showAlert(with: "Error", and: error!.localizedDescription)
                 completion(nil, error)
             }
             
