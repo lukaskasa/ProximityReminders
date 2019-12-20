@@ -75,7 +75,6 @@ class ListViewController: UITableViewController {
         datasource.fetchedResultsController.tryFetch()
     }
     
-
     /// Method to set the badge count on launch
     func setBadgeCount() {
         let predicate = NSPredicate(format: "isCompleted == %@", 0)

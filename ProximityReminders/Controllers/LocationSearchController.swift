@@ -70,7 +70,6 @@ extension LocationSearchController: UISearchResultsUpdating, UISearchBarDelegate
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
-  
 
 }
 

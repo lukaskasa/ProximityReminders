@@ -22,7 +22,6 @@ class ReminderViewController: UIViewController {
     
     // MARK: - Properties
     let map = MKMapView()
-    var resultSearchController: UISearchController?
     var locationSearchController: LocationSearchController?
     var selectedLocation: MKPlacemark?
     var managedObjectContext: NSManagedObjectContext!
@@ -43,6 +42,10 @@ class ReminderViewController: UIViewController {
         return NotificationManager(viewController: nil)
     }()
     
+    lazy var resultSearchController: UISearchController = {
+        return UISearchController(searchResultsController: locationSearchController)
+    }()
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -53,6 +56,7 @@ class ReminderViewController: UIViewController {
         locationActivityIndicator.startAnimating()
         locationSearchController = (storyboard!.instantiateViewController(withIdentifier: String(describing: LocationSearchController.self)) as! LocationSearchController)
         locationSearchController?.handleMapSearchDelegate = self
+        setupSearchBar()
         addDoneButtonOnKeyboard()
         configureSaveButton()
         configureReminder()
@@ -78,7 +82,8 @@ class ReminderViewController: UIViewController {
     
     /// Setup searchbar when user wants to search for a location
     @IBAction func searchLocation(_ sender: Any) {
-        setupSearchBar()
+        resultSearchController.isActive = true
+        resultSearchController.searchBar.becomeFirstResponder()
     }
     
     // MARK: - Helper Methods
@@ -209,21 +214,21 @@ class ReminderViewController: UIViewController {
     func setupSearchBar() {
         definesPresentationContext = true
         locationSearchController?.mapView = map
-        resultSearchController = UISearchController(searchResultsController: locationSearchController)
+        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.searchController = resultSearchController
+        resultSearchController.searchBar.barStyle = .default
+        resultSearchController.searchBar.tintColor = .white
+        resultSearchController.searchBar.setTextColor(color: .black)
+        resultSearchController.hidesNavigationBarDuringPresentation = false
+        resultSearchController.obscuresBackgroundDuringPresentation = true
+        resultSearchController.searchResultsUpdater = locationSearchController
+        resultSearchController.searchBar.delegate = locationSearchController
         
-        if let searchController = resultSearchController {
-            navigationItem.searchController = searchController
-            searchController.searchBar.barStyle = .default
-            searchController.searchBar.tintColor = .white
-            searchController.searchBar.setTextColor(color: .black)
-            searchController.searchBar.becomeFirstResponder()
-            searchController.searchBar.text = " "
-            searchController.hidesNavigationBarDuringPresentation = true
-            searchController.dimsBackgroundDuringPresentation = false
-            searchController.searchResultsUpdater = locationSearchController
-            searchController.searchBar.delegate = locationSearchController
+        if #available(iOS 13.0, *) {
+            resultSearchController.showsSearchResultsController = true
+        } else {
+            resultSearchController.searchBar.text = " "
         }
-
     }
     
     /// Adds a 'Done' button to the keyboard tool bar to be able to dismiss the keyboard
@@ -244,7 +249,6 @@ class ReminderViewController: UIViewController {
         doneToolbar.sizeToFit()
         
         reminderTextView.inputAccessoryView = doneToolbar
-        
     }
     
     /// Resigns the text view as first responder
@@ -261,7 +265,9 @@ extension ReminderViewController: UITextViewDelegate {
     /// Tells the delegate that editing of the specified text view has begun.
     /// Apple documentation: https://developer.apple.com/documentation/uikit/uitextviewdelegate/1618610-textviewdidbeginediting
     func textViewDidBeginEditing(_ textView: UITextView) {
-        textView.text = ""
+        if reminder == nil {
+            textView.text = ""
+        }
     }
     
 }
@@ -290,7 +296,7 @@ extension ReminderViewController: HandleMapSearch {
     
     // MARK: - Helper
     
-    /// Adds annotation onto the map for the proveded placemark
+    /// Adds annotation onto the map for the provided placemark
     func addMapAnnonation(for place: MKPlacemark?) {
         map.removeAnnotations(map.annotations)
         guard let place = place else { return }
@@ -306,7 +312,7 @@ extension ReminderViewController: HandleMapSearch {
         map.addAnnotation(annotation)
     }
     
-    /// Adds overlay onto the map for the proveded placemark
+    /// Adds overlay onto the map for the provided placemark
     func addMapOverlay(for place: MKPlacemark?) {
         map.removeOverlays(map.overlays)
         guard let place = place else { return }
